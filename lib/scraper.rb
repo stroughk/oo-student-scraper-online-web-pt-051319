@@ -2,6 +2,10 @@ require 'open-uri'
 require 'pry'
 
 class Scraper
+  
+  attr_accessor :name, :location, :twitter, :linkedin, :github, :blog, :profile_quote, :bio, :profile_url
+
+  @@all = []
 
     def self.scrape_index_page(index_url)
     index_page = Nokogiri::HTML(open(index_url))
