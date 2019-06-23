@@ -6,6 +6,15 @@ class Scraper
   attr_accessor :name, :location, :twitter, :linkedin, :github, :blog, :profile_quote, :bio, :profile_url
 
   @@all = []
+  
+    def initialize(student_hash)
+    student_hash.each do |attribute, value|
+      self.send("#{attribute}=", value)
+    end
+    @@all << self
+  end
+
+  
 
     def self.scrape_index_page(index_url)
     index_page = Nokogiri::HTML(open(index_url))
