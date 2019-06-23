@@ -2,21 +2,8 @@ require 'open-uri'
 require 'pry'
 
 class Scraper
-  
-  attr_accessor :name, :location, :twitter, :linkedin, :github, :blog, :profile_quote, :bio, :profile_url
 
-  @@all = []
-  
-    def initialize(student_hash)
-    student_hash.each do |attribute, value|
-      self.send("#{attribute}=", value)
-    end
-    @@all << self
-  end
-
-  
-
-    def self.scrape_index_page(index_url)
+  def self.scrape_index_page(index_url)
     index_page = Nokogiri::HTML(open(index_url))
     students = []
     index_page.css("div.roster-cards-container").each do |card|
@@ -45,6 +32,7 @@ class Scraper
         student[:blog] = link
       end
     end
+    
     student[:profile_quote] = profile_page.css(".profile-quote").text if profile_page.css(".profile-quote")
     student[:bio] = profile_page.css("div.bio-content.content-holder div.description-holder p").text if profile_page.css("div.bio-content.content-holder div.description-holder p")
 
@@ -52,4 +40,3 @@ class Scraper
   end
 
 end
-
